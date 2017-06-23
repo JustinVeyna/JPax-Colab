@@ -14,6 +14,8 @@ class crawler(scrapy.Spider):
             
 
 if __name__ == '__main__':
-    response = scrapy.Selector()
+    response = None
+    with open('GelbooruSamplePageMatsushima', 'r') as f:
+        response = scrapy.Selector(f.read())
     for img_obj in respose.css('span.thumb'):
             yield {'id': img_obj.css('::attr(id)')}
