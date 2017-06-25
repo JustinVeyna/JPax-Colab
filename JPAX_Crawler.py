@@ -7,7 +7,11 @@ import scrapy
 from urllib.parse import urljoin
 TEST = False
 
-#scrapy runspider quotes_spider.py -o results.json
+"""
+IMPORTANT: To run use the below command:
+    scrapy runspider JPAX_Crawler.py -o results.json
+"""
+
 START_URLS = ["https://gelbooru.com/index.php?page=post&s=list&tags=matsushima_michiru"]
 
 
