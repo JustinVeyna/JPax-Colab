@@ -20,7 +20,7 @@ CRAWLER_SETTINGS = {
 START_URLS = []
 START_URLS_OLD = []
 
-characters = ["matsushima_michiru", "kousaka_kirino"]
+CHARACTERS = ["matsushima_michiru", "kousaka_kirino"]
 
 hosts = [
     "gelbooru.com",
@@ -28,13 +28,12 @@ hosts = [
     ]
 host = hosts[1]
 
-
 base_url = "https://"+host+"/index.php?page=dapi&s=post&q=index&tags="
 base_url_old = "https://"+host+"/index.php?page=post&s=list&tags="
 
 char_dict = PL.load_progress_from_file()
 
-for character in characters:
+for character in CHARACTERS:
     START_URLS.append(base_url+character+"&pid="+str(char_dict[character]))
     #START_URLS_OLD.append(base_url_old+character+"&pid="+str(char_dict[character]))
         
@@ -42,12 +41,12 @@ for character in characters:
 def get_character_from_url(url):
     return parse_qs(url)["tags"][0]
 
-
-#initialize if not created
-#if initialized, make sure start url includes PID
-#if not exist, initialize each char to 0
-#if file exists, load dictionary informations, append PID from dictionary
-#to the URL
+def extract_chars(filename):
+    '''
+        file names formated as "char_1-char_2-char_3-hash"?
+        Returns a [characters] in "matsushima_michiru" format given a file name
+    '''
+    return None 
 
 if __name__ == "__main__":
     print(START_URLS)

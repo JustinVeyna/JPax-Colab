@@ -39,7 +39,7 @@ class crawler(scrapy.Spider):
 if __name__ == '__main__':
     if TEST:
         response = None
-        with open('GelbooruSamplePageMatsushima', 'r') as f:
+        with open('data_files/sample_files/GelbooruSamplePageMatsushima', 'r') as f:
             response = scrapy.Selector(text = f.read())
         for img_obj in response.css('span.thumb'):
                 print({'id': img_obj.css('span::attr(id)').extract(), 'tumbnail': img_obj.css('img::attr(src)').extract()})

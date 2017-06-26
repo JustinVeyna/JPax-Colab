@@ -1,7 +1,7 @@
 import SaveLoader as sl
 from collections import defaultdict
 
-PROGRESS_FILE = "SavedProgress.p"
+PROGRESS_FILE = "data_files/SavedProgress.p"
 
 def load_progress_from_file():
     char_dict = defaultdict(int)

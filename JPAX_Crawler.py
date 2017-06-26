@@ -9,7 +9,7 @@ TEST = False
 
 """
 IMPORTANT: To run use the below command:
-    scrapy runspider JPAX_Crawler.py -o results.json
+    scrapy runspider JPAX_Crawler.py -o data_files/out.json
 """
 
 from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP, PROGRESS_FILE
@@ -43,7 +43,7 @@ def update_char_progress(character):
 if __name__ == '__main__':
     if TEST:
         response = None
-        with open('GelbooruSamplePageMatsushima.xml', 'r') as f:
+        with open('data_files/sample_files/GelbooruSamplePageMatsushima.xml', 'r') as f:
             response = scrapy.Selector(text = f.read())
         for img_obj in response.xpath('//post'):
                 print({'id': img_obj.xpath('@id').extract_first(), 'tumbnail': img_obj.xpath('@preview_url').extract_first()})
