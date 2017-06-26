@@ -35,7 +35,7 @@ base_url_old = "https://"+host+"/index.php?page=post&s=list&tags="
 
 char_dict = defaultdict(int)
 
-if PL.load_progress_from_file() != None:
+if char_dict != None:
     for character in characters:
         START_URLS.append(base_url+character+"&pid="+char_dict[character])
         START_URLS_OLD.append(base_url_old+character+"&pid="+char_dict[character])
