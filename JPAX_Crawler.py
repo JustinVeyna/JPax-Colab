@@ -38,7 +38,7 @@ class crawler(scrapy.Spider):
             i = {'image_urls': [u]}
             yield i #sends request to save thumbnail
             
-            d = {'id': id, 'tumbnail': tmb}           
+            d = {'id': id, 'tumbnail': tmb, "character": character}           
             yield d #sends request to save info
 
 if __name__ == '__main__':

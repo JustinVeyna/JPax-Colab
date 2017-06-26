@@ -20,8 +20,15 @@ START_URLS_OLD = []
 
 characters = ["matsushima_michiru", "kousaka_kirino"]
 
-base_url = "https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags="
-base_url_old = "https://gelbooru.com/index.php?page=post&s=list&tags="
+hosts = [
+    "gelbooru.com",
+    "safebooru.org"
+    ]
+host = hosts[1]
+
+
+base_url = "https://"+host+"/index.php?page=dapi&s=post&q=index&tags="
+base_url_old = "https://"+host+"/index.php?page=post&s=list&tags="
 
 for character in characters:
     START_URLS.append(base_url+character)
