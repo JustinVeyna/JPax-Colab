@@ -33,16 +33,12 @@ host = hosts[1]
 base_url = "https://"+host+"/index.php?page=dapi&s=post&q=index&tags="
 base_url_old = "https://"+host+"/index.php?page=post&s=list&tags="
 
-char_dict = defaultdict(int)
+char_dict = PL.load_progress_from_file()
 
 if char_dict != None:
     for character in characters:
-        START_URLS.append(base_url+character+"&pid="+char_dict[character])
-        START_URLS_OLD.append(base_url_old+character+"&pid="+char_dict[character])
-else:
-    for char in characters:
-        START_URLS.append(base_url+char+"&pid=0")
-        START_URLS_OLD.append(base_url_old+char+"&pid=0")
+        START_URLS.append(base_url+character+"&pid="+str(char_dict[character]))
+        START_URLS_OLD.append(base_url_old+character+"&pid="+str(char_dict[character]))
         
 
 def get_character_from_url(url):
