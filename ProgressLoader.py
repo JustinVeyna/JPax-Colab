@@ -11,12 +11,12 @@ def load_progress_from_file():
         
     except:
         print("No saved progress currently. Proceeding from beginning.")
-        return None
+        return defaultdict(int)
     
     else:
         if char_dict.len() == 0:
             print("Progress file is empty. Proceeding from beginning.")
-            return None
+            return defaultdict(int)
         else:
             return char_dict
         

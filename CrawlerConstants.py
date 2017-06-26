@@ -35,9 +35,6 @@ base_url_old = "https://"+host+"/index.php?page=post&s=list&tags="
 
 char_dict = PL.load_progress_from_file()
 
-if char_dict == None:
-    char_dict = defaultdict(int)
-
 for character in characters:
     START_URLS.append(base_url+character+"&pid="+str(char_dict[character]))
     START_URLS_OLD.append(base_url_old+character+"&pid="+str(char_dict[character]))
@@ -45,8 +42,7 @@ for character in characters:
 
 def get_character_from_url(url):
     return parse_qs(url)["tags"][0]
-def get_PID_from_url(url):
-    return parse_qs(url)["pid"][0]
+
 
 #initialize if not created
 #if initialized, make sure start url includes PID
