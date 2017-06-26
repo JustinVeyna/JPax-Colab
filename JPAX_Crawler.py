@@ -22,9 +22,7 @@ class crawler(scrapy.Spider):
     
     def parse(self, response):
         #store the files for different characters in different folders
-        character = get_character_from_url(response.url)
-        self.custom_settings["IMAGES_STORE"] = CRAWLER_SETTINGS["IMAGES_STORE"]+character
-        
+        character = get_character_from_url(response.url)        
         img_count = 0
         for img_obj in response.xpath('//post'):#for each image
             if img_count > IMAGE_CAP:
