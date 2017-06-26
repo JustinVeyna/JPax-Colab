@@ -12,8 +12,8 @@ IMPORTANT: To run use the below command:
     scrapy runspider JPAX_Crawler.py -o results.json
 """
 
-from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP
-
+from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP, get_PID_from_url, PROGRESS_FILE
+import SaveLoader as sl
 
 class crawler(scrapy.Spider):
     name = "JPAX"
@@ -24,7 +24,6 @@ class crawler(scrapy.Spider):
         #store the files for different characters in different folders
         character = get_character_from_url(response.url)
         self.custom_settings["IMAGES_STORE"] = CRAWLER_SETTINGS["IMAGES_STORE"]+character
-        
         
         img_count = 0
         for img_obj in response.xpath('//post'):#for each image
@@ -38,8 +37,14 @@ class crawler(scrapy.Spider):
             i = {'image_urls': [u]}
             yield i #sends request to save thumbnail
             
-            d = {'id': id, 'tumbnail': tmb, "character": character}           
+            d = {'id': id, 'tumbnail': tmb, "character": character}
             yield d #sends request to save info
+        update_char_progress(character)
+
+def update_char_progress(character):
+    d = sl.pickle_load(PROGRESS_FILE)
+    d[character]+=1
+    sl.pickle_save(d, PROGRESS_FILE)
 
 if __name__ == '__main__':
     if TEST:
