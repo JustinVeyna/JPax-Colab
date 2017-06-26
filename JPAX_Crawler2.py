@@ -27,7 +27,7 @@ class crawler(scrapy.Spider):
     }
     
     def parse(self, response):
-        for img_obj in response.xpath('//posts//post'):
+        for img_obj in response.xpath('//post'):
             id = img_obj.xpath('@id').extract_first()#image id
             tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link
                         
