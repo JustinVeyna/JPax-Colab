@@ -20,12 +20,15 @@ from CrawlerConstants import CHARACTERS, extract_chars
 from time import sleep
 import matplotlib.pyplot as plt
 from numpy import uint8
+from HashCharMap import get_hash_char_map
 
 TEST = False
 DEBUG = False
 
-def gen_classes(filename):
-    chars = extract_chars(filename)
+RESIZE = (128,128)
+
+def gen_classes(filename, hcm):
+    chars = hcm[filename]
     return list(map(lambda x: x in chars, CHARACTERS))
 
 def show_imgs(imgs):
@@ -42,6 +45,7 @@ if __name__ == '__main__':
                     filepath = os.path.join(root, filename)
                     print(filepath)
     else:
+        hcm = get_hash_char_map()
         images = []
         image_classes = []
         for root, dirnames, filenames in os.walk("imgs/full"):
@@ -49,10 +53,9 @@ if __name__ == '__main__':
                 if re.search("\.(jpg|jpeg|png|bmp|tiff)$", filename):
                     filepath = os.path.join(root, filename)
                     image = ndimage.imread(filepath, mode="RGB")
-                    image_resized = misc.imresize(image, (128, 128))
+                    image_resized = misc.imresize(image, RESIZE)
                     images.append(image_resized)
-                    image_classes.append(gen_classes(filename)) #replace with character classifier
-                    
+                    image_classes.append(gen_classes(filename, hcm))
                     if DEBUG:
                         show_imgs([image, image_resized])
                                                 

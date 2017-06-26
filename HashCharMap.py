@@ -22,6 +22,13 @@ def prep_json_file():
     with open('data_files/out.json') as data_file:
         pass #TODO: see above IMPORTANT
 
+def process_item(item):
+    """
+    Right now returns one character but may later add functionality to return multiple characters
+    TODO: return all chars in image?
+    """
+    return [item["character"]]
+
 def process_json():
     d = dict()
     with open('data_files/out.json') as data_file:    
@@ -29,7 +36,7 @@ def process_json():
         for r in data:
             for item in r:
                 if "images" in item.keys() and "checksum" in item["images"][0].keys():
-                    d[item["images"][0]["checksum"]] = item["character"]
+                    d[item["images"][0]["checksum"]] = process_item(item)
     sl.pickle_save(d, HASH_CHAR_FILE)
 
 def get_hash_char_map():

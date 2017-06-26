@@ -41,12 +41,5 @@ for character in CHARACTERS:
 def get_character_from_url(url):
     return parse_qs(url)["tags"][0]
 
-def extract_chars(filename):
-    '''
-        file names formated as "char_1-char_2-char_3-hash"?
-        Returns a [characters] in "matsushima_michiru" format given a file name
-    '''
-    return None 
-
 if __name__ == "__main__":
     print(START_URLS)
