@@ -12,7 +12,7 @@ IMPORTANT: To run use the below command:
     scrapy runspider JPAX_Crawler.py -o results.json
 """
 
-from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP, get_PID_from_url, PROGRESS_FILE
+from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP, PROGRESS_FILE
 import SaveLoader as sl
 
 class crawler(scrapy.Spider):
@@ -29,19 +29,15 @@ class crawler(scrapy.Spider):
                 break
             img_count+=1
             id = img_obj.xpath('@id').extract_first()#image id
-            tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link
-                        
+            tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link        
             u = urljoin(response.url, tmb) #url of thumbnail
-            i = {'image_urls': [u]}
-            yield i #sends request to save thumbnail
-            
-            d = {'id': id, 'tumbnail': tmb, "character": character}
+            d = {'id': id, 'tumbnail': tmb, "character": character, 'image_urls': [u]}
             yield d #sends request to save info
         update_char_progress(character)
 
 def update_char_progress(character):
     d = sl.pickle_load(PROGRESS_FILE)
-    d[character]+=1
+    d[character] = (d[character] + 1)%11 #TODO: do I want the % ?
     sl.pickle_save(d, PROGRESS_FILE)
 
 if __name__ == '__main__':

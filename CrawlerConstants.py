@@ -6,6 +6,7 @@ Created on Jun 25, 2017
 from urllib.parse import parse_qs
 from collections import defaultdict
 import ProgressLoader as PL
+from ProgressLoader import PROGRESS_FILE
 
 IMAGE_CAP=200
 
@@ -18,8 +19,6 @@ CRAWLER_SETTINGS = {
 
 START_URLS = []
 START_URLS_OLD = []
-
-PROGRESS_FILE = "SavedProgress.p"
 
 characters = ["matsushima_michiru", "kousaka_kirino"]
 
@@ -37,7 +36,7 @@ char_dict = PL.load_progress_from_file()
 
 for character in characters:
     START_URLS.append(base_url+character+"&pid="+str(char_dict[character]))
-    START_URLS_OLD.append(base_url_old+character+"&pid="+str(char_dict[character]))
+    #START_URLS_OLD.append(base_url_old+character+"&pid="+str(char_dict[character]))
         
 
 def get_character_from_url(url):
@@ -50,3 +49,5 @@ def get_character_from_url(url):
 #if file exists, load dictionary informations, append PID from dictionary
 #to the URL
 
+if __name__ == "__main__":
+    print(START_URLS)
