@@ -12,24 +12,27 @@ IMPORTANT: To run use the below command:
     scrapy runspider JPAX_Crawler.py -o results.json
 """
 
-START_URLS = ["https://gelbooru.com/index.php?page=post&s=list&tags=matsushima_michiru"]
-
+from CrawlerConstants import START_URLS, CRAWLER_SETTINGS, get_character_from_url, IMAGE_CAP
 
 
 class crawler(scrapy.Spider):
     name = "JPAX"
     start_urls = START_URLS
-    custom_settings = {
-        'BOT_NAME': 'JPAX',
-        'IMAGES_STORE':'mtsma',
-        'ITEM_PIPELINES':{'scrapy.pipelines.images.ImagesPipeline': 1},
-        'DOWNLOAD_DELAY':.5
-    }
+    custom_settings = CRAWLER_SETTINGS
     
     def parse(self, response):
-        for img_obj in response.css('span.thumb'):
-            id = img_obj.css('span::attr(id)').extract_first()#image id
-            tmb = img_obj.css('img::attr(src)').extract_first()#thumbnail reletive link
+        #store the files for different characters in different folders
+        character = get_character_from_url(response.url)
+        self.custom_settings["IMAGES_STORE"] = CRAWLER_SETTINGS["IMAGES_STORE"]+character
+        
+        
+        img_count = 0
+        for img_obj in response.xpath('//post'):#for each image
+            if img_count > IMAGE_CAP:
+                break
+            img_count+=1
+            id = img_obj.xpath('@id').extract_first()#image id
+            tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link
                         
             u = urljoin(response.url, tmb) #url of thumbnail
             i = {'image_urls': [u]}
@@ -39,9 +42,9 @@ class crawler(scrapy.Spider):
             yield d #sends request to save info
 
 if __name__ == '__main__':
-    if TEST: #will test link selection
+    if TEST:
         response = None
-        with open('GelbooruSamplePageMatsushima', 'r') as f:
+        with open('GelbooruSamplePageMatsushima.xml', 'r') as f:
             response = scrapy.Selector(text = f.read())
-        for img_obj in response.css('span.thumb'):
-                print({'id': img_obj.css('span::attr(id)').extract(), 'tumbnail': img_obj.css('img::attr(src)').extract()})
+        for img_obj in response.xpath('//post'):
+                print({'id': img_obj.xpath('@id').extract_first(), 'tumbnail': img_obj.xpath('@preview_url').extract_first()})
