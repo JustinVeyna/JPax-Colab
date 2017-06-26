@@ -1,13 +1,13 @@
 import SaveLoader as SL
 from collections import defaultdict
-
+from CrawlerConstants import PROGRESS_FILE
 
 def load_progress_from_file():
     #returns list of [current character, base url, saved post id] in this order.
     #return None if no saved progress.
     char_dict = defaultdict(int)
     try:
-        char_dict = pickle_load("SavedProgress.p","r")
+        char_dict = pickle_load(PROGRESS_FILE,"r")
         
     except:
         print("No saved progress currently. Proceeding from beginning.")
