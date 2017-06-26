@@ -1,7 +1,7 @@
 '''
 Created on May 21, 2017
 
-@author: Shintomo
+@author: Justin Veyna
 '''
 try:
     from cPickle import Pickler, Unpickler

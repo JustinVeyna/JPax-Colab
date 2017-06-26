@@ -1,14 +1,14 @@
 '''
 Created on Jun 25, 2017
 
-@author: Shintomo
+@author: Justin Veyna
 '''
 '''
 Checklist
-resize
-rotate
-flip
-stretch?????
+resize    X
+rotate    
+flip      
+stretch???
 
 '''
 

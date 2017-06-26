@@ -1,7 +1,7 @@
 '''
 Created on Jun 25, 2017
 
-@author: Shintomo
+@author: Justin Veyna and Paxton Wong
 '''
 from urllib.parse import parse_qs
 from collections import defaultdict

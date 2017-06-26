@@ -1,7 +1,7 @@
 '''
 Created on Jun 26, 2017
 
-@author: Shintomo
+@author: Justin Veyna
 '''
 """
 IMPORTANT: Must modify the json file to make this work:

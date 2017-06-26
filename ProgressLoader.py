@@ -1,3 +1,9 @@
+'''
+Created on Jun 25, 2017
+
+@author: Justin Veyna and Paxton Wong
+'''
+
 import SaveLoader as sl
 from collections import defaultdict
 

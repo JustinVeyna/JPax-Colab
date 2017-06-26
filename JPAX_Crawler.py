@@ -1,7 +1,7 @@
 '''
 Created on Jun 23, 2017
 
-@author: Shintomo
+@author: Justin Veyna
 '''
 import scrapy
 from urllib.parse import urljoin
