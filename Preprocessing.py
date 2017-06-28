@@ -16,7 +16,7 @@ import os
 from scipy import ndimage, misc
 import SaveLoader as sl
 import re
-from CrawlerConstants import CHARACTERS, extract_chars
+from CrawlerConstants import CHARACTERS
 from time import sleep
 import matplotlib.pyplot as plt
 from numpy import uint8
@@ -28,7 +28,11 @@ DEBUG = False
 RESIZE = (128,128)
 
 def gen_classes(filename, hcm):
-    chars = hcm[filename]
+    try:
+        chars = hcm[filename.split(".")[0]]
+    except KeyError:
+        print("KeyError:", filename.split(".")[0])
+        chars = []
     return list(map(lambda x: x in chars, CHARACTERS))
 
 def show_imgs(imgs):
@@ -37,6 +41,7 @@ def show_imgs(imgs):
         plt.show()
 
 if __name__ == '__main__':
+    print("Starting Preprocessing")
     if TEST:
         for root, dirnames, filenames in os.walk("imgs/full"):
             print(root)

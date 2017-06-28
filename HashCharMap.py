@@ -35,8 +35,9 @@ def process_json():
         data = json.load(data_file)
         for r in data:
             for item in r:
-                if "images" in item.keys() and "checksum" in item["images"][0].keys():
-                    d[item["images"][0]["checksum"]] = process_item(item)
+                if "images" in item.keys() and "path" in item["images"][0].keys():
+                    key = item["images"][0]["path"].split("/")[-1].split(".")[0]
+                    d[key] = process_item(item)
     sl.pickle_save(d, HASH_CHAR_FILE)
 
 def get_hash_char_map():
