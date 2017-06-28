@@ -5,7 +5,7 @@ Created on Jun 23, 2017
 '''
 import scrapy
 from urllib.parse import urljoin
-TEST = False
+TEST = True
 
 """
 IMPORTANT: To run use the below command:
@@ -27,18 +27,27 @@ class crawler(scrapy.Spider):
         for img_obj in response.xpath('//post'):#for each image
             if img_count > IMAGE_CAP:
                 break
-            img_count+=1
-            id = img_obj.xpath('@id').extract_first()#image id
-            tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link        
-            u = urljoin(response.url, tmb) #url of thumbnail
-            d = {'id': id, 'tumbnail': tmb, "character": character, 'image_urls': [u]}
-            yield d #sends request to save info
+            #
+            if is_single_char(img_obj):
+                img_count+=1
+                id = img_obj.xpath('@id').extract_first()#image id
+                tmb = img_obj.xpath('@preview_url').extract_first()#thumbnail reletive link        
+                u = urljoin(response.url, tmb) #url of thumbnail
+                d = {'id': id, 'tumbnail': tmb, "character": character, 'image_urls': [u]}
+                yield d #sends request to save info
         update_char_progress(character)
 
 def update_char_progress(character):
     d = sl.pickle_load(PROGRESS_FILE)
     d[character] = (d[character] + 1)%11 #TODO: do I want the % ?
     sl.pickle_save(d, PROGRESS_FILE)
+
+def is_single_char(img_object) -> bool:
+    #only does check for girls for now
+    img_tags = img_object.xpath('@tags').extract_first()
+    return "1girl" in img_tags or "1boy" in img_tags
+
+    
 
 if __name__ == '__main__':
     if TEST:
